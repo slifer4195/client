@@ -43,6 +43,7 @@ void process_newchannel_request (FIFORequestChannel *_channel){
 void populate_file_data (int person){
 	//cout << "populating for person " << person << endl;
 	string filename = "BIMDC/" + to_string(person) + ".csv";
+	// cout << "NAME: " << filename << endl;
 	char line[100];
 	ifstream ifs (filename.c_str());
 	if (ifs.fail()){
@@ -131,6 +132,8 @@ void process_data_request (FIFORequestChannel* rc, Request* r){
 	DataRequest* d = (DataRequest* ) r;
 	
 	if (d->person < 1 || d->person > 15 || d->seconds < 0 || d->seconds >= 60.0 || d->ecgno <1 || d->ecgno > 2){
+		// cout << &d ;
+		// cout << " d->person: " << d-> person << " d->sec: " << d->seconds << " d->ecgno: " << d->ecgno << endl;
 		cerr << "Incorrectly formatted data request" << endl;
 		Request resp (UNKNOWN_REQ_TYPE);
 		rc->cwrite (&resp, sizeof (Request));
